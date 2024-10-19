@@ -16,6 +16,26 @@ test('should return the sum of two numbers separated by commas', () => {
 });
 
 // Test for more than two comma-separated numbers
-test('should return the sum of all the numbers separated by commas', () => {
+test('should return the sum of all numbers separated by commas', () => {
     expect(add("1,5,4")).toBe(10);
+});
+
+// Test for handling newlines between numbers
+test('should return the sum of numbers separated by commas and newlines', () => {
+    expect(add("1\n2,3")).toBe(6);
+});
+
+// Test for handling custom delimiters
+test('should return the sum of numbers using custom delimiter', () => {
+    expect(add("//;\n1;2;3")).toBe(6);
+});
+
+// Test for handling multiple newlines and commas
+test('should return the sum of numbers separated by multiple commas and newlines', () => {
+    expect(add("1\n2\n3,4")).toBe(10);
+});
+
+// Test for handling custom delimiter with special characters
+test('should return the sum of numbers using a custom delimiter with special characters', () => {
+    expect(add("//#\n1#2#3")).toBe(6);
 });
