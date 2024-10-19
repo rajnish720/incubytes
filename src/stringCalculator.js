@@ -8,7 +8,15 @@ function add(numbers) {
     // Check for custom delimiter at the beginning of the string
     if (numbers.startsWith("//")) {
         const delimiterEndIndex = numbers.indexOf("\n");
-        delimiter = new RegExp(numbers.substring(2, delimiterEndIndex));
+        const delimiterSection = numbers.substring(2, delimiterEndIndex);
+        
+        if (delimiterSection.startsWith("[")) {
+            // Handle multiple delimiters or delimiters of any length
+            const delimiters = delimiterSection.match(/\[(.*?)\]/g).map(d => d.slice(1, -1));
+            delimiter = new RegExp(delimiters.map(d => d.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join("|"));
+        } else {
+            delimiter = new RegExp(delimiterSection); // Single character delimiter
+        }
         numbers = numbers.substring(delimiterEndIndex + 1); // Remove the delimiter part
     }
 
@@ -21,8 +29,8 @@ function add(numbers) {
         throw new Error(`negatives not allowed: ${negatives.join(",")}`);
     }
 
-    // Return the sum of the numbers
-    return nums.reduce((sum, num) => sum + num, 0);
+    // Ignore numbers greater than 1000
+    return nums.reduce((sum, num) => num > 1000 ? sum : sum + num, 0);
 }
 
 module.exports = { add };

@@ -49,3 +49,31 @@ test('should throw an error when a negative number is passed', () => {
 test('should throw an error when multiple negative numbers are passed', () => {
     expect(() => add("1,-2,-3,4")).toThrow("negatives not allowed: -2,-3");
 });
+
+// Test for ignoring numbers greater than 1000
+test('should ignore numbers greater than 1000', () => {
+    expect(add("2,1001")).toBe(2);
+});
+
+test('should sum numbers and ignore numbers greater than 1000', () => {
+    expect(add("1000,999,1001")).toBe(1999);
+});
+
+// Test for handling delimiters of any length
+test('should return the sum of numbers using a custom delimiter of any length', () => {
+    expect(add("//[***]\n1***2***3")).toBe(6);
+});
+
+test('should return the sum of numbers with a custom long delimiter', () => {
+    expect(add("//[###]\n4###5###6")).toBe(15);
+});
+
+// Test for handling multiple delimiters
+test('should return the sum of numbers using multiple delimiters', () => {
+    expect(add("//[*][%]\n1*2%3")).toBe(6);
+});
+
+// Test for handling multiple delimiters with longer length
+test('should return the sum of numbers using multiple delimiters of any length', () => {
+    expect(add("//[***][%%]\n1***2%%3")).toBe(6);
+});
