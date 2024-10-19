@@ -15,6 +15,12 @@ function add(numbers) {
     // Split the numbers by the delimiter(s)
     const nums = numbers.split(delimiter).map(Number);
 
+    // Check for negative numbers
+    const negatives = nums.filter(num => num < 0);
+    if (negatives.length > 0) {
+        throw new Error(`negatives not allowed: ${negatives.join(",")}`);
+    }
+
     // Return the sum of the numbers
     return nums.reduce((sum, num) => sum + num, 0);
 }

@@ -39,3 +39,13 @@ test('should return the sum of numbers separated by multiple commas and newlines
 test('should return the sum of numbers using a custom delimiter with special characters', () => {
     expect(add("//#\n1#2#3")).toBe(6);
 });
+
+// Test for handling a single negative number
+test('should throw an error when a negative number is passed', () => {
+    expect(() => add("1,-2,3")).toThrow("negatives not allowed: -2");
+});
+
+// Test for handling multiple negative numbers
+test('should throw an error when multiple negative numbers are passed', () => {
+    expect(() => add("1,-2,-3,4")).toThrow("negatives not allowed: -2,-3");
+});
